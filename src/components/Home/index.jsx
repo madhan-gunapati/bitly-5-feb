@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, Navigate, redirect } from "react-router-dom"
 
 const Home = ()=>{
     const [userDetails, changeUserDetails] = useState({name:'', email:''})
@@ -29,6 +29,8 @@ const Home = ()=>{
         const text = await fetched_result.text()
         if(fetched_result.status == 200){
             changeUserDetails({name:'', email:''})
+            redirect('/form')
+           
         }
         console.log(text)
     } 
