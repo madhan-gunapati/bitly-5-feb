@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const UrlSubmission = ()=>{
   const [input_url, changeUrlState] =useState('')
   const [email, changeEmail] = useState('')
+  const [response, changeResponse] = useState('...')
 
 
   const changeUrl = (e)=>{
@@ -31,7 +32,8 @@ const UrlSubmission = ()=>{
     }
     const response = await fetch(url, options)
     const text = await response.text()
-    console.log(text)
+    changeResponse(text)
+    
   }
 
     return <div>
@@ -42,7 +44,10 @@ const UrlSubmission = ()=>{
                     <button type="button" onClick={getShortUrl}>Submit URL</button>
                   <Link to='/home'> <button type="button">Go Home</button> </Link> 
               </div>
-            </div>
+              <h3>Your Tiny Url : {response}</h3>
+              
+              </div>
+            
 }
 
 export default UrlSubmission

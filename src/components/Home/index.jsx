@@ -1,38 +1,42 @@
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { Link, Navigate, redirect } from "react-router-dom"
+import { sendUsertoDB } from "../../state/userSlice"
 
 const Home = ()=>{
-    const [userDetails, changeUserDetails] = useState({name:'', email:''})
 
-    const changeusername = (e)=>{
-        changeUserDetails((p)=>({...p, name:e.target.value}))
-    }
+   
+    const [userDetails, changeUserDetails] = useState({name:'', email:''})
+    const dispatch = useDispatch()
+   const changeusername = (e)=>{
+       changeUserDetails((p)=>({...p, name:e.target.value}))
+   }
     
     const changeEmail = (e)=>{
         changeUserDetails((p)=>({...p, email:e.target.value}))
     }
 
     const submitDetails = async ()=>{
+        dispatch(sendUsertoDB(userDetails))
+        // const url = 'http://localhost:3000/user-registration'
+        // const options = {
+        //     method:'PUT',
+        //     headers:{
+        //         'Content-Type':'Application/json',
+        //         'Accept':'Application/json',
+        //         'Authorization':''
+        //     },
+        //     body:JSON.stringify(userDetails)
+        // }
+        // const fetched_result = await fetch(url , options)
         
-        const url = 'http://localhost:3000/user-registration'
-        const options = {
-            method:'PUT',
-            headers:{
-                'Content-Type':'Application/json',
-                'Accept':'Application/json',
-                'Authorization':''
-            },
-            body:JSON.stringify(userDetails)
-        }
-        const fetched_result = await fetch(url , options)
-        
-        const text = await fetched_result.text()
-        if(fetched_result.status == 200){
-            changeUserDetails({name:'', email:''})
-            redirect('/form')
+        // const text = await fetched_result.text()
+        // if(fetched_result.status == 200){
+        //     changeUserDetails({name:'', email:''})
+            
            
-        }
-        console.log(text)
+        // }
+        
     } 
 
     return <div>
@@ -40,7 +44,7 @@ const Home = ()=>{
         <form onSubmit={(e)=>{e.preventDefault()}}>
 
             <label htmlFor="name">Name</label>
-            <input id='name' type="text" onChange={changeusername} value={userDetails.name} /> <br />
+            <input id='name' type="text" onChange={changeusername} value={name} /> <br />
             <label htmlFor="email" >Email</label>
             <input type="text" onChange={changeEmail} value={userDetails.email} /> <br />
             <button type="button" onClick={submitDetails}>Submit</button>
