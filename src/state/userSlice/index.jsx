@@ -16,8 +16,9 @@ export const sendUsertoDB = createAsyncThunk("data/fetch", async(payload, thunkA
     }
 
         const response = await fetch(url, options)
-        const text = await response.text()
-        return text
+        const text = await response.json()
+        console.log(text.id)
+        return text.id
         
     }
 )
@@ -42,8 +43,8 @@ const userSlice = createSlice({
         })
         .addCase(sendUsertoDB.fulfilled,(state, action)=>{  
             state.loading = false
-            state.result = action.payload
-            console.log(action.payload)
+            state.user_id = action.payload
+            state.result='success'
 
         }).addCase(sendUsertoDB.rejected , (state, action)=>{
             state.loading = false, 

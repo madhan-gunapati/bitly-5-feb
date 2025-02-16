@@ -19,30 +19,10 @@ const Home = ()=>{
 
     const submitDetails = async ()=>{
         dispatch(sendUsertoDB(userDetails))
-        // const url = 'http://localhost:3000/user-registration'
-        // const options = {
-        //     method:'PUT',
-        //     headers:{
-        //         'Content-Type':'Application/json',
-        //         'Accept':'Application/json',
-        //         'Authorization':''
-        //     },
-        //     body:JSON.stringify(userDetails)
-        // }
-        // const fetched_result = await fetch(url , options)
-        
-        // const text = await fetched_result.text()
-        // if(fetched_result.status == 200){
-        //     changeUserDetails({name:'', email:''})
-            
-           
-        // }
         
     } 
 
-    const redirection = ()=>{
-        window.open('https://www.google.com')
-    }
+    
 
     return <div>
         <h1>User From</h1>
@@ -55,7 +35,7 @@ const Home = ()=>{
             <button type="button" onClick={submitDetails}>Submit</button>
             <Link to='/form'><button type="button">Go to Form</button></Link>
         </form>
-        <button type="button" onClick={redirection}>Redirect</button>
+       
     </div>
 }
 
