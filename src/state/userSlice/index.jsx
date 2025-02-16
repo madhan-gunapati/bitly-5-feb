@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isRejectedWithValue } from "@reduxjs/toolkit";
 
 export const sendUsertoDB = createAsyncThunk("data/fetch", async(payload, thunkApi)=>{
     console.log(payload)
@@ -18,6 +18,7 @@ export const sendUsertoDB = createAsyncThunk("data/fetch", async(payload, thunkA
         const response = await fetch(url, options)
         const text = await response.text()
         return text
+        
     }
 )
 
