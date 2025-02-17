@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, isRejectedWithValue } from "@reduxjs/toolkit";
 
 export const sendUsertoDB = createAsyncThunk("data/fetch", async(payload, thunkApi)=>{
-    console.log(payload)
-    const {name, email } = payload 
+    
+    const {name, email, password } = payload 
     const url = 'http://localhost:3000/user-registration'
     const options = {
         method:'PUT', 
@@ -11,13 +11,16 @@ export const sendUsertoDB = createAsyncThunk("data/fetch", async(payload, thunkA
             'Accept':'Application/json',
             'Authorization':''
         },
-        body:JSON.stringify({name, email})
+        body:JSON.stringify({name, email, password})
 
     }
 
         const response = await fetch(url, options)
+        if(response.status === 400){
+            isRejectedWithValue('error')
+        }
         const text = await response.json()
-        console.log(text.id)
+        
         return text.id
         
     }
