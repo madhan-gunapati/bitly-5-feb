@@ -7,6 +7,8 @@ const Home = ()=>{
 
    
     const [userDetails, changeUserDetails] = useState({name:'', email:'', password:''})
+    const {loading, result }= useSelector((state)=>state.HomeSlice)
+    
     const dispatch = useDispatch()
     
    const changeusername = (e)=>{
@@ -30,6 +32,7 @@ const Home = ()=>{
 
     return <div>
         <h1>User From</h1>
+        {loading? <p>Loading.....</p>:
         <form onSubmit={(e)=>{e.preventDefault()}}>
 
             <label htmlFor="name">Name</label>
@@ -41,8 +44,9 @@ const Home = ()=>{
             <br />
             <button type="button" onClick={submitDetails}>Register</button>
             <Link to='/form'><button type="button">Go to Form</button></Link>
+            <p>{result}</p>
         </form>
-       
+}
     </div>
 }
 

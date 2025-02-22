@@ -16,8 +16,12 @@ export const sendUsertoDB = createAsyncThunk("data/fetch", async(payload, thunkA
     }
 
         const response = await fetch(url, options)
+        
         if(response.status === 400){
-            isRejectedWithValue('error')
+            
+            const msg = await response.text()
+            
+            return thunkApi.rejectWithValue({ message: msg, code: 'P2025' });
         }
         const text = await response.json()
         
@@ -45,13 +49,22 @@ const userSlice = createSlice({
             state.loading = true
         })
         .addCase(sendUsertoDB.fulfilled,(state, action)=>{  
+            
             state.loading = false
             state.user_id = action.payload
             state.result='success'
 
         }).addCase(sendUsertoDB.rejected , (state, action)=>{
+            if(isRejectedWithValue(action)){
+                 state.loading = false, 
+            state.result = action.payload.message
+
+            }
+            
             state.loading = false, 
-            state.result = 'Error'
+            state.result = 'Internal Server Error'
+            
+            
 
         })
     }
