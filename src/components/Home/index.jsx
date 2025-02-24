@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, Navigate, redirect, replace, useNavigate } from "react-router-dom"
+import { Link, Navigate, redirect, replace, Route, Routes, useNavigate } from "react-router-dom"
 import { sendUsertoDB } from "../../state/userSlice"
 
 const Home = ()=>{
@@ -31,6 +31,7 @@ const Home = ()=>{
     
 
     return <div>
+       
         <h1>User From</h1>
         {loading? <p>Loading.....</p>:
         <form onSubmit={(e)=>{e.preventDefault()}}>
@@ -46,6 +47,8 @@ const Home = ()=>{
             <Link to='/form'><button type="button">Go to Form</button></Link>
             <p>{result}</p>
         </form>
+
+       
 }
     </div>
 }

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 export const LoginUser = createAsyncThunk('LoginSlice',async(payload , thunkApi)=>{
     const {username , password} = payload.loginDetails
@@ -17,19 +18,42 @@ export const LoginUser = createAsyncThunk('LoginSlice',async(payload , thunkApi)
     }
     const result  = await fetch(url , options)
     const result_text = await result.text()
-    console.log(result_text)
+    if(result.status === 200){
+    return result_text
+    }
+    else{
+        return thunkApi.rejectWithValue(result_text)
+    }
+    
     
 })
 
 const LoginSlice = createSlice({
     name:'LoginSlice', 
     initialState:{
-        jwt_token:''
+        loading:false,
+        jwt_token:'',
+        error_msg:''
     },
     reducers:{
 
+    },
+    extraReducers:(builder)=>{
+        builder.addCase(LoginUser.pending , (state, action)=>{
+            state.loading= true
+        })
+        .addCase(LoginUser.fulfilled, (state, action)=>{
+            state.loading =  false
+            state.error_msg = ''
+            state.jwt_token = action.payload
+            Cookies.set('authToken', action.payload, {expires:1})
+        })
+        .addCase(LoginUser.rejected, (state, action)=>{
+            state.loading= false
+            state.error_msg = action.payload
+        })
     }
 })
 
-export default LoginSlice
+export default LoginSlice.reducer
 
