@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { LoginUser } from "../../state/LoginSlice"
+import { add_jwt_token, LoginUser } from "../../state/LoginSlice"
 import Cookies from "js-cookie"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const Login = ()=>{
     const {loading, error_msg, jwt_token} = useSelector((state)=>state.LoginSlice)
     const naviagte = useNavigate()
-    const [loginDetails , changeDetails] = useState({username:'' , password:''})
+    const [loginDetails , changeDetails] = useState({email:'' , password:''})
     const dispatch = useDispatch()
-    const changeUsername = (e)=>{
-        changeDetails((p)=>({...p , username:e.target.value}))
+    const changeEmail = (e)=>{
+        changeDetails((p)=>({...p , email:e.target.value}))
     }
 
     const changePassword = (e)=>{
@@ -21,10 +21,11 @@ const Login = ()=>{
         const stored_cookie = Cookies.get('authToken')
         
         if(stored_cookie){
-            naviagte('/form')
+            dispatch(add_jwt_token(stored_cookie))
+            naviagte('/')
         }
 
-    },[jwt_token])
+    },[])
 
         
     return <div>
@@ -33,9 +34,10 @@ const Login = ()=>{
             e.preventDefault()
         }}>
 
-        <input type="text" value={loginDetails.username} placeholder="username" onChange={changeUsername} /> <br />
+        <input type="text" value={loginDetails.email} placeholder="email" onChange={changeEmail} /> <br />
         <input type="password" value={loginDetails.password} placeholder="password" onChange={changePassword}/> <br />
-        <button type="button" onClick={()=>{dispatch(LoginUser({loginDetails}))}}>Login</button>
+        <button type="button" onClick={()=>{dispatch(LoginUser({loginDetails}))}}>Login</button> <br />
+       <Link to='/register'> <button type="button">New User</button></Link>
         </form>
         <p>{error_msg}</p>
     </div>

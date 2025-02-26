@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link, Navigate, redirect, replace, Route, Routes, useNavigate } from "react-router-dom"
 import { sendUsertoDB } from "../../state/userSlice"
 
-const Home = ()=>{
+const UserRegistration = ()=>{
 
    
     const [userDetails, changeUserDetails] = useState({name:'', email:'', password:''})
@@ -43,8 +43,8 @@ const Home = ()=>{
            <label htmlFor="password">Password</label>
             <input type="password" id='password' value={userDetails.password} onChange={changePassword} /> 
             <br />
-            <button type="button" onClick={submitDetails}>Register</button>
-            <Link to='/form'><button type="button">Go to Form</button></Link>
+            <button type="button" onClick={submitDetails}>Register</button> <br />
+            <Link to='/login'><button type="button">Go to Login</button></Link>
             <p>{result}</p>
         </form>
 
@@ -53,4 +53,4 @@ const Home = ()=>{
     </div>
 }
 
-export default Home
+export default UserRegistration

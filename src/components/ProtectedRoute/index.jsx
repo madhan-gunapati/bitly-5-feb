@@ -1,6 +1,10 @@
-import { Outlet, Route, Routes } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { Navigate, Outlet, Route, Routes } from "react-router-dom"
 
 const ProtectedRoute = ()=>{
-    return (22? <Outlet />:<p>Sample</p>)
+    const {jwt_token} = useSelector((state)=>state.LoginSlice.jwt_token)
+    
+    
+    return (jwt_token!=='' ? <Outlet />:<Navigate to='/login' />)
 }
 export default ProtectedRoute

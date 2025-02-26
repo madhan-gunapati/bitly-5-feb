@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 
 export const LoginUser = createAsyncThunk('LoginSlice',async(payload , thunkApi)=>{
-    const {username , password} = payload.loginDetails
+    const {email , password} = payload.loginDetails
     
     
     const url = 'http://localhost:3000/login'
@@ -13,7 +13,7 @@ export const LoginUser = createAsyncThunk('LoginSlice',async(payload , thunkApi)
             'Accept':'Application/json',
             'Authorization':''
         },
-        body:JSON.stringify({username, password})
+        body:JSON.stringify({email, password})
 
     }
     const result  = await fetch(url , options)
@@ -36,6 +36,9 @@ const LoginSlice = createSlice({
         error_msg:''
     },
     reducers:{
+        add_jwt_token:(state, action)=>{
+            state.jwt_token = action.payload
+        }
 
     },
     extraReducers:(builder)=>{
@@ -57,3 +60,4 @@ const LoginSlice = createSlice({
 
 export default LoginSlice.reducer
 
+export const  {add_jwt_token} = LoginSlice.actions
