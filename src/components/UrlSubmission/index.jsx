@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getShortUrl } from "../../state/MiniurlSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { remove_jwt_token } from "../../state/LoginSlice";
 
 const UrlSubmission = ()=>{
   
@@ -50,8 +51,9 @@ const UrlSubmission = ()=>{
                     <button type="button" onClick={()=>{dispatch(getShortUrl({input_url}))}}>Submit URL</button>
                   
               </div>
-              <h3>Your Tiny Url : {response}</h3>
+              <h3>Your Tiny Url : {short_url}</h3>
               
+              <button type="button" onClick={()=>{dispatch(remove_jwt_token())}}>LOGOUT USER</button>
               </div>
             
 }

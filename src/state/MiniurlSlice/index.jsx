@@ -3,9 +3,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const getShortUrl = createAsyncThunk('MiniurlSlice', async(payload, thunkApi)=>{
     const {input_url} = payload
     const state = thunkApi.getState()
-    console.log(state)
+    
+    
     const jwt_token = state.LoginSlice.jwt_token
-    console.log(jwt_token)
+    
     const url = 'http://localhost:3000/short-url'
     const options = {
       method:'PUT',
@@ -18,11 +19,13 @@ export const getShortUrl = createAsyncThunk('MiniurlSlice', async(payload, thunk
     }
     const response = await fetch(url, options)
     const result_text = await response.text()
-
-    if(result.status === 200){
+    
+    if(response.status === 200){
+        
         return result_text
         }
         else{
+
             return thunkApi.rejectWithValue(result_text)
         }
     
@@ -46,9 +49,12 @@ const MiniurlSlice = createSlice({
         })
         .addCase(getShortUrl.fulfilled, (state, action)=>{
             state.loading = false
+            
             state.short_url = action.payload
+            
         })
         .addCase(getShortUrl.rejected , (state, action)=>{
+            
             state.loading = false
             state.error_msg = action.payload
         })

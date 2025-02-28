@@ -32,13 +32,18 @@ const LoginSlice = createSlice({
     name:'LoginSlice', 
     initialState:{
         loading:false,
-        jwt_token:'',
+        jwt_token:null,
         error_msg:''
     },
     reducers:{
         add_jwt_token:(state, action)=>{
             state.jwt_token = action.payload
+        },
+        remove_jwt_token:(state, action)=>{
+            Cookies.remove('authToken')
+            state.jwt_token = null
         }
+        
 
     },
     extraReducers:(builder)=>{
@@ -60,4 +65,4 @@ const LoginSlice = createSlice({
 
 export default LoginSlice.reducer
 
-export const  {add_jwt_token} = LoginSlice.actions
+export const  {add_jwt_token , remove_jwt_token} = LoginSlice.actions

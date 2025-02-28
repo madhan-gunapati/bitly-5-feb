@@ -22,7 +22,7 @@ const RedirectionComponent = ()=>{
             }
             const response = await fetch(url,options)
             const redirec_url = await response.text()
-            console.log(redirec_url)
+            
             window.open('https://'+redirec_url)
         }
         fetchData();

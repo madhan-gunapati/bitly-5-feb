@@ -21,11 +21,13 @@ const Login = ()=>{
         const stored_cookie = Cookies.get('authToken')
         
         if(stored_cookie){
+           
+            
             dispatch(add_jwt_token(stored_cookie))
             naviagte('/')
         }
 
-    },[])
+    },[jwt_token])
 
         
     return <div>
